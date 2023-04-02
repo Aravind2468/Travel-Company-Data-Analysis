@@ -1,5 +1,10 @@
 # Travel Company Data Analysis using SQL
 
+## Tables
+
+![Table1](./img/Booking_Table.png)
+
+![Table2](./img/user_table.png)
 
 ## Questions on DataSet
 
@@ -45,6 +50,57 @@ rank() over(partition by User_id order by Booking_date) as rn -- For each user r
 from Booking_table ) b where rn=1 and Line_of_business='Hotel';
 
 ```
+#### Solution 2: Using first_value function
+```
+select distinct User_id
+from
+(
+select 
+*,
+first_value(Line_of_business) over(partition by User_id order by Booking_date) as first_booking 
+from Booking_table ) b where first_booking='Hotel';
+
+```
+### Calculate days between first and last booking of each user?
+
+#### Solution 1:
+```
+select User_id, datediff(day,min(Booking_date),max(Booking_date)) from Booking_table group by User_id;
+
+```
+
+
+### Count the number of flight and Hotel Bookings in each of the user for the year 2022?
+
+#### Solution 1:
+
+```
+select User_id,
+sum(case when Line_of_business='Flight' then 1 else 0 end) as flight_bookings,
+sum(case when Line_of_business='Hotel' then 1 else 0 end) as hotel_bookings
+from Booking_table
+group by User_id
+
+```
+### Count the number of flight and Hotel Bookings in each of the user segment for the year 2022?
+
+#### Solution 1:
+
+```
+select Segment,
+sum(case when Line_of_business='Flight' then 1 else 0 end) as flight_bookings,
+sum(case when Line_of_business='Hotel' then 1 else 0 end) as hotel_bookings
+from Booking_table b
+inner join User_table u on b.User_id=u.User_id
+group by Segment
+
+```
+
+
+
+
+
+
 
 
 
