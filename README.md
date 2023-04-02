@@ -2,9 +2,9 @@
 
 ## Tables
 
-![Table1](./img/Booking_Table.png)
+![Table1](./img/Booking_Table.PNG)
 
-![Table2](./img/user_table.png)
+![Table2](./img/user_table.PNG)
 
 ## Questions on DataSet
 
